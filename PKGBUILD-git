@@ -3,7 +3,7 @@ _pkgname=${pkgname%-git}
 pkgver=r19.bb54e46
 pkgrel=1
 pkgdesc="Dependency graph of installed packages on your wallpaper."
-url="http://github.com/Kharacternyk/${_pkgname}"
+url="http://github.com/RuijieYu/${_pkgname}"
 arch=('any')
 license=('GPL-3')
 depends=('graphviz' 'pacman-contrib')
@@ -13,7 +13,7 @@ optdepends=('feh: wallpaper setting using feh'
             'xorg-xdpyinfo: auto-detection of screen size on GNOME (Xorg)')
 makedepends=('git')
 conflicts=("${_pkgname}")
-source=("${_pkgname}::git+https://github.com/Kharacternyk/${_pkgname}.git#branch=master")
+source=("${_pkgname}::git+https://github.com/RuijieYu/${_pkgname}.git#branch=fork")
 sha256sums=(SKIP)
 
 pkgver() {
