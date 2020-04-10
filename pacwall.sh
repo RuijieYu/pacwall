@@ -14,6 +14,10 @@ GSIZE=""
 OUTPUT="pacwall.png"
 STARTDIR="${PWD}"
 
+_pacman() {
+    pacman "$@" || :
+}
+
 prepare() {
     WORKDIR="$(mktemp -d)"
     mkdir -p "${WORKDIR}/"{stripped,raw}
@@ -27,7 +31,7 @@ cleanup() {
 
 generate_graph_pactree() {
     # Get a space-separated list of the "leaves".
-    PKGS="$(pacman -Qttq)"
+    PKGS="$(_pacman -Qttq)"
     for package in $PKGS; do
         # Mark each potential orphan using a distinct color.
         echo "\"$package\" [color=\"$ONODE\"]" >> pkgcolors
@@ -45,13 +49,13 @@ generate_graph_pactree() {
             "raw/$package" > "stripped/$package"
     done
 
-    EPKGS="$(pacman -Qeq)"
+    EPKGS="$(_pacman -Qeq)"
     for package in $EPKGS; do
         # Mark each explicitly installed package using a distinct color.
         echo "\"$package\" [color=\"$ENODE\"]" >> pkgcolors
     done
 
-    FPKGS="$(pacman -Qmq)"
+    FPKGS="$(_pacman -Qmq)"
     for package in $FPKGS; do
         # Mark each foreign package (AUR, etc) using a distinct color
         echo "\"$package\" [color=\"$FNODE\"]" >> pkgcolors
